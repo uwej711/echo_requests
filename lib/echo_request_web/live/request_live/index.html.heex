@@ -1,0 +1,10 @@
+<.header>
+  Listing Requests
+  <:subtitle>Your token is <%= @token %></:subtitle>
+</.header>
+
+<.table id="requests" rows={@streams.requests}>
+  <:col :let={{_id, request}} label="Time"><%= Calendar.strftime(request.time, "%X") %></:col>
+  <:col :let={{_id, request}} label="Request"><%= request.message %></:col>
+  <:col :let={{_id, request}} label="Headers"><%= request.headers %></:col>
+</.table>
