@@ -22,7 +22,7 @@ defmodule EchoRequestWeb.RequestLive.Index do
 
   @impl true
   def handle_info({:request, request_message, headers}, socket) do
-    request = %{id: socket.assigns.request_count, message: request_message, headers: inspect(headers), time: NaiveDateTime.local_now()}
+    request = %{id: socket.assigns.request_count, message: request_message, headers: headers, time: NaiveDateTime.local_now()}
     socket = update(socket, :request_count, fn c -> c + 1 end)
     {:noreply, stream_insert(socket, :requests, request, at: 0)}
   end

@@ -3,7 +3,7 @@ defmodule EchoRequestWeb.PageController do
 
   def request(conn, %{"token" => token}) do
     request =
-      case String.strip(conn.query_string) do
+      case String.trim(conn.query_string) do
         "" -> "#{conn.method} #{conn.request_path}"
         _ -> "#{conn.method} #{conn.request_path}?#{conn.query_string}"
       end

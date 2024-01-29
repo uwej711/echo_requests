@@ -1,10 +1,22 @@
 <.header>
   Listing Requests
-  <:subtitle>Your token is <%= @token %></:subtitle>
+  <:subtitle>
+    Send requests to /request/<%= @token %> to see them here. <br>
+    Query string, HTTP method and headers are shown.
+  </:subtitle>
 </.header>
 
 <.table id="requests" rows={@streams.requests}>
   <:col :let={{_id, request}} label="Time"><%= Calendar.strftime(request.time, "%X") %></:col>
   <:col :let={{_id, request}} label="Request"><%= request.message %></:col>
-  <:col :let={{_id, request}} label="Headers"><%= request.headers %></:col>
+  <:col :let={{_id, request}} label="Headers">
+    <dl class="-my-4 divide-y divide-zinc-100">
+      <%= for header <- request.headers do %>
+        <div class="flex gap-2 py-0 text-sm leading-6 sm:gap-8">
+          <dt class="w-1/4 flex-none text-zinc-500"><%= elem(header, 0) %></dt>
+          <dd class="text-zinc-700 max-w-lg break-all"><%= elem(header, 1) %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </:col>
 </.table>
