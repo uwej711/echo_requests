@@ -14,15 +14,14 @@ defmodule EchoRequestWeb.RequestLive.Index do
 
     {:ok,
      socket
-     |> assign(:foo, "bar")
      |> assign(:token, token)
      |> assign(:request_count, 0)
      |> stream(:requests, [])}
   end
 
   @impl true
-  def handle_info({:request, request_message, headers}, socket) do
-    request = %{id: socket.assigns.request_count, message: request_message, headers: headers, time: NaiveDateTime.local_now()}
+  def handle_info({:request, request_message, body, headers}, socket) do
+    request = %{id: socket.assigns.request_count, message: request_message, body: body, headers: headers, time: NaiveDateTime.local_now()}
     socket = update(socket, :request_count, fn c -> c + 1 end)
     {:noreply, stream_insert(socket, :requests, request, at: 0)}
   end

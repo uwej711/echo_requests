@@ -10,22 +10,21 @@ defmodule EchoRequestWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :request do
+    plug :fetch_session
   end
 
   scope "/", EchoRequestWeb do
     pipe_through :browser
-
-    get "/request/:token", PageController, :request
 
     live_session :request do
       live "/", RequestLive.Index, :index
     end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", EchoRequestWeb do
-  #   pipe_through :api
-  # end
+  scope "/request", EchoRequestWeb do
+    pipe_through :request
+
+    match :*, "/:token", PageController, :request
+  end
 end

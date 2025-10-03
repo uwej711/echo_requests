@@ -7,8 +7,9 @@
 </.header>
 
 <.table id="requests" rows={@streams.requests}>
-  <:col :let={{_id, request}} label="Time"><%= Calendar.strftime(request.time, "%X") %></:col>
+  <:col :let={{_id, request}} label="Time (UTC)"><%= Calendar.strftime(request.time, "%X") %></:col>
   <:col :let={{_id, request}} label="Request"><%= request.message %></:col>
+  <:col :let={{_id, request}} label="Body"><%= request.body %></:col>
   <:col :let={{_id, request}} label="Headers">
     <dl class="-my-4 divide-y divide-zinc-100">
       <%= for header <- request.headers do %>
