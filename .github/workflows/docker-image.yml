@@ -3,6 +3,7 @@ name: Create and publish a Docker image
 on:
   push:
     branches: ['develop']
+    tags: [ v* ]
 
 env:
   REGISTRY: ghcr.io
@@ -33,6 +34,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
         id: push
